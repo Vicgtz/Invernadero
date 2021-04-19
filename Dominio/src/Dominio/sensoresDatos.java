@@ -11,30 +11,30 @@ import java.util.Date;
  *
  * @author DELL
  */
-public class sendorDatos {
+public class sensoresDatos {
    private Integer id;
     private Date fecha;
     private sensor sensor;
     private String temperatura;
     private String humedad;
-    private String telefono;
+    
 
-    public sendorDatos(Integer id, Date fecha, sensor sensor, String temperatura, String humedad, String telefono) {
+    public sensoresDatos(Integer id, Date fecha, sensor sensor, String temperatura, String humedad) {
         this.id = id;
         this.fecha = fecha;
         this.sensor = sensor;
         this.temperatura = temperatura;
         this.humedad = humedad;
-        this.telefono = telefono;
+       
     }
 
-    public sendorDatos( Date fecha, sensor sensor, String temperatura, String humedad, String telefono) {
+    public sensoresDatos( Date fecha, sensor sensor, String temperatura, String humedad) {
         
         this.fecha = fecha;
         this.sensor = sensor;
         this.temperatura = temperatura;
         this.humedad = humedad;
-        this.telefono = telefono;
+       
     }
     
     public Integer getId() {
@@ -77,17 +77,11 @@ public class sendorDatos {
         this.humedad = humedad;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+    
 
     @Override
     public String toString() {
-        return "sendorDatos{" + "id=" + id + ", fecha=" + fecha + ", sensor=" + sensor + ", temperatura=" + temperatura + ", humedad=" + humedad + ", telefono=" + telefono + '}';
+        return "sendorDatos{" + "id=" + id + ", fecha=" + fecha + ", sensor=" + sensor + ", temperatura=" + temperatura + ", humedad=" + humedad + ", telefono=" + '}';
     }
      
     
