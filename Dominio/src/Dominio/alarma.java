@@ -14,21 +14,23 @@ import java.util.Date;
 public class alarma {
     private Integer id;
     private String tipo;
-    private String cantidad;
+    private float minimo;
+    private float maximo;
 
-    public alarma(Integer id, String tipo, String cantidad) {
+    public alarma(Integer id, String tipo, float minimo, float maximo) {
         this.id = id;
         this.tipo = tipo;
-        this.cantidad = cantidad;
+        this.minimo = minimo;
+        this.maximo = maximo;
     }
 
-   public alarma( String tipo, String cantidad) {
-        
+   public alarma( String tipo, float minimo, float maximo) {
+       
         this.tipo = tipo;
-        this.cantidad = cantidad;
+        this.minimo = minimo;
+        this.maximo = maximo;
     }
 
-    
     public Integer getId() {
         return id;
     }
@@ -45,18 +47,29 @@ public class alarma {
         this.tipo = tipo;
     }
 
-    public String getCantidad() {
-        return cantidad;
+    public float getMinimo() {
+        return minimo;
     }
 
-    public void setCantidad(String cantidad) {
-        this.cantidad = cantidad;
+    public void setMinimo(float minimo) {
+        this.minimo = minimo;
+    }
+
+    public float getMaximo() {
+        return maximo;
+    }
+
+    public void setMaximo(float maximo) {
+        this.maximo = maximo;
     }
 
     @Override
     public String toString() {
-        return "alarma{" + "id=" + id + ", tipo=" + tipo + ", cantidad=" + cantidad + '}';
+        return "alarma{" + "id=" + id + ", tipo=" + tipo + ", minimo=" + minimo + ", maximo=" + maximo + '}';
     }
+
+    
+
    
     
 }

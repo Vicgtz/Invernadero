@@ -15,11 +15,11 @@ public class sensoresDatos {
    private Integer id;
     private Date fecha;
     private sensor sensor;
-    private String temperatura;
-    private String humedad;
-    
+    private float temperatura;
+    private float humedad;
+   
 
-    public sensoresDatos(Integer id, Date fecha, sensor sensor, String temperatura, String humedad) {
+    public sensoresDatos(Integer id, Date fecha, sensor sensor, float temperatura, float humedad) {
         this.id = id;
         this.fecha = fecha;
         this.sensor = sensor;
@@ -28,13 +28,13 @@ public class sensoresDatos {
        
     }
 
-    public sensoresDatos( Date fecha, sensor sensor, String temperatura, String humedad) {
+    public sensoresDatos( Date fecha, sensor sensor, float temperatura, float humedad) {
         
         this.fecha = fecha;
         this.sensor = sensor;
         this.temperatura = temperatura;
         this.humedad = humedad;
-       
+        
     }
     
     public Integer getId() {
@@ -61,27 +61,27 @@ public class sensoresDatos {
         this.sensor = sensor;
     }
 
-    public String getTemperatura() {
+    public float getTemperatura() {
         return temperatura;
     }
 
-    public void setTemperatura(String temperatura) {
+    public void setTemperatura(float temperatura) {
         this.temperatura = temperatura;
     }
 
-    public String getHumedad() {
+    public float getHumedad() {
         return humedad;
     }
 
-    public void setHumedad(String humedad) {
+    public void setHumedad(float humedad) {
         this.humedad = humedad;
     }
 
-    
+  
 
     @Override
     public String toString() {
-        return "sendorDatos{" + "id=" + id + ", fecha=" + fecha + ", sensor=" + sensor + ", temperatura=" + temperatura + ", humedad=" + humedad + ", telefono=" + '}';
+        return "sendorDatos{" + "id=" + id + ", fecha=" + fecha + ", sensor=" + sensor + ", temperatura=" + temperatura + ", humedad=" + humedad + ", telefono="  + '}';
     }
      
     

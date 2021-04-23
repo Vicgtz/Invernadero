@@ -6,7 +6,9 @@
 package datos;
 
 import Dominio.alarma;
-import Dominio.usuario;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,15 +21,17 @@ public class DAOalarma extends CRUD<alarma> {
 
     @Override
     public void guardar(alarma entidad) {
-      try{
-            java.sql.Connection conexion = this.getConexion();
-            java.sql.Statement comando = conexion.createStatement();           
-            String sql = String.format("INSERT INTO `invernadero`.`alarma` (`tipo`, `cantidad`) VALUES ('%s', '%s');", 
-                    entidad.getTipo(), entidad.getCantidad());
-            comando.executeUpdate(sql);
+       try {
+            Connection conexion = this.getConexion();
+            String sql = "INSERT INTO invernadero.alarma (tipo, minimo, maximo) VALUES (?,?,?);";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setString(1, entidad.getTipo());
+            ps.setFloat(2, entidad.getMinimo());
+            ps.setFloat(3, entidad.getMaximo());
+            
+            ps.executeUpdate();
             conexion.close();
-        }
-        catch(Exception ex){
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }    
     }
@@ -40,65 +44,61 @@ public class DAOalarma extends CRUD<alarma> {
     @Override
     public ArrayList<alarma> obtener() {
         ArrayList<alarma> listaP = new ArrayList<>();
-        try{            
+       try{            
             java.sql.Connection conexion = this.getConexion();
-            java.sql.Statement comando = conexion.createStatement();
-            String sql = "SELECT idalarma, tipo, cantidad FROM invernadero.alarma;";
-            ResultSet resultado = comando.executeQuery(sql);
-            while(resultado.next())
+            String sql = "SELECT * FROM invernadero.alarma;";
+             PreparedStatement ps = conexion.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
             {                
-                int id = resultado.getInt("idalarma");
-                String tipo = resultado.getString("tipo");
-                String cantidad = resultado.getString("cantidad");
-              
+                int id = rs.getInt(1);
+                String tipo = rs.getString(2);
+                float minimo = rs.getFloat(3);
+                float maximo = rs.getFloat(4);
                 
-               alarma p = new alarma(id, tipo, cantidad);
-                listaP.add(p);
+                
+                
+               listaP.add(new alarma(id, tipo, minimo, maximo)) ;
+                
             }
             conexion.close();
-            return listaP;
+            
         }
         catch(SQLException ex){
             System.err.println(ex.getMessage());
-            return listaP;
+            
         }
+       return listaP;
     }
 
     @Override
     public alarma ObtenerUno(String textoBusqueda) {
-    ArrayList<alarma> listaP = new ArrayList<>();
-        try{            
-            java.sql.Connection conexion = this.getConexion();
-            java.sql.Statement comando = conexion.createStatement();
-            String sql = "SELECT idalarma, tipo, cantidad FROM invernadero.alarma;";
-            ResultSet resultado = comando.executeQuery(sql);
-            while(resultado.next())
-            {                
-                int id = resultado.getInt("idalarma");
-                String tipo = resultado.getString("tipo");
-                String cantidad = resultado.getString("cantidad");
-              
-                
-               alarma p = new alarma(id, tipo, cantidad);
-                listaP.add(p);
-            }
-            conexion.close();
-            for(alarma p : listaP)
-            {
-                String idP = p.getId()+"";
-                if(idP.equalsIgnoreCase(textoBusqueda))
-                {
-                    return p;
-                }                
-            }
+    alarma s = null;
+         try {
+            Connection conexion = this.getConexion();
+            String sql = "SELECT * FROM invernadero.alarma WHERE idalarma = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(textoBusqueda));
+            ResultSet rs = ps.executeQuery();
+
             
-            return null;
-        }
-        catch(SQLException ex){
+
+            rs.next();
+              int id = rs.getInt(1);
+                String tipo = rs.getString(2);
+                float minimo = rs.getFloat(3);
+                float maximo = rs.getFloat(4);
+                
+                
+               s = new alarma(id, tipo, minimo, maximo) ;
+                
+            conexion.close();
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
-            return null;
         }
+    return s;
+    }
     
-    }   
-    
+      
+      
 }
