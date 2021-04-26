@@ -9,6 +9,7 @@ package Datos;
 import Dominio.sensor;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +22,20 @@ import java.util.Date;
  */
 public class DAOsensor extends CRUD<sensor> {
 
+   private static String CADENA_CONEXION = "jdbc:mysql://localhost/invernadero?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static String USUARIO = "root";
+    private static String CONTRASENIA = "12345678"; //Alter: 64224Cas
+
+    protected Connection getConexion() throws SQLException {
+        try {
+            Connection conexion = DriverManager.getConnection(CADENA_CONEXION, USUARIO, CONTRASENIA);
+            return conexion;
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            throw ex;
+        }
+    }
+    
     @Override
     public void guardar(sensor entidad) {
         try {
@@ -29,8 +44,6 @@ public class DAOsensor extends CRUD<sensor> {
             PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setString(1, entidad.getClave());
             ps.setString(2, entidad.getMarca());
-           
-           
             ps.setString(3, entidad.getInvernadero());
             ps.setString(4, entidad.getNumero());
             ps.setString(5, entidad.getCorreo());
